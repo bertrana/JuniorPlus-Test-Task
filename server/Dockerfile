@@ -1,0 +1,8 @@
+FROM node:24-alpine
+RUN npm install -g nodemon
+WORKDIR /src
+COPY package.json .
+RUN npm install
+COPY . .
+EXPOSE 4000
+CMD ["npm", "run", "dev"]
