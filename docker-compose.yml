@@ -1,13 +1,31 @@
 services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: "notesUser"
+      POSTGRES_PASSWORD: "1234"
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - database-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   server:
     build: ./server
     container_name: api_backend
+    restart: always
     ports:
       - '4000:4000'
+    depends_on:
+      - db
   client:
     build: ./client
     container_name: client_frontend
+    restart: always
     ports:
       - '3000:3000'
     stdin_open: true
     tty: true
+volumes:
+  database-data:
+    driver: local
