@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1"
+  }
+}
