@@ -1,11 +1,11 @@
 import { Client } from 'pg';
 
 export const client = new Client({
-    user: 'notesUser',
-    password: '1234',
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD || '',
     host: 'db',
     port: 5432,
-    database: 'notesDatabase',
+    database: process.env.POSTGRES_DB,
 })
 
 export const initDatabaseConnection = async () => {

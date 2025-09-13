@@ -2,30 +2,35 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_USER: "notesUser"
-      POSTGRES_PASSWORD: "1234"
+      POSTGRES_HOST_AUTH_METHOD: ${POSTGRES_HOST_AUTH_METHOD}
     ports:
       - "5432:5432"
     restart: always
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
   server:
     build: ./server
     container_name: api_backend
     restart: always
+    env_file:
+      - .env
     ports:
       - '4000:4000'
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   client:
     build: ./client
     container_name: client_frontend
     restart: always
     ports:
       - '3000:3000'
-    stdin_open: true
-    tty: true
 volumes:
   database-data:
     driver: local
