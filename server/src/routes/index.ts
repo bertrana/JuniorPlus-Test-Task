@@ -1,25 +1,46 @@
 import express from "express";
-import {getNotesList} from "../controllers/noteController.ts";
+import {getNotesById, getNotesList, setNote} from "../controllers/noteController.ts";
 
-// определяем Router
 const notesRouter = express.Router();
 
+/**
+ * Получение списка всех существующих заметок
+ */
 notesRouter.get("/all", async function(_request, response){
     const result = await getNotesList();
-    console.log("getNotesList result", result);
+
     response.send({
         status: "success",
-        data: {
-            text: 'Get all notes',
-            ...(result.rows?.length ? {result} : {}),
-        }
+        data: result.rows?.length ? result.rows : [],
     });
 });
-notesRouter.get("/:id", function(request, response){
-    response.send(`Получаем заметку с id ${request.params.id}`);
-});
-notesRouter.post("/create", function(_request, response){
-    response.send("Создание заметки");
+
+/**
+ * Получение конкретной заметки по её id
+ */
+notesRouter.get("/:id", async function(request, response){
+    const result = await getNotesById(request.params.id);
+
+    if (!result.rows[0]) {
+        response.send({
+            status: "error",
+        })
+        return;
+    }
+
+    response.send({
+        status: "success",
+        data: result.rows[0]
+    });});
+
+notesRouter.post("/create", function(request, response){
+    console.log(request.body);
+    const result = setNote(request.body);
+    console.log(result);
+
+    response.send({
+        status: "success",
+    });
 });
 notesRouter.put("/edit:id", function(request, response){
     response.send(`Редактирование заметки с id ${request.params.id}`);
