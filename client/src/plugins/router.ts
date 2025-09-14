@@ -7,8 +7,8 @@ const routes = [
     {
         path: '/',
         name: 'MainPage',
-        component: MainPage },
-    {
+        component: MainPage
+    }, {
         path: '/notes/:id',
         name: 'NotePage',
         component: NotePage
