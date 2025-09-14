@@ -44,21 +44,6 @@ const clickAddNote = () => {
 
 onMounted(async () => {
   notesList.value = await getAllNotes();
-  // notesList.value = [
-  //   {
-  //     id: 123,
-  //     title: "title 1",
-  //     content: "Add note",
-  //   }, {
-  //     id: 234,
-  //     title: "title 2",
-  //     content: "Add note",
-  //   }, {
-  //     id: 345,
-  //     title: "title 3",
-  //     content: "Add note",
-  //   },
-  // ];
 })
 </script>
 

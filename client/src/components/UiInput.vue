@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-defineModel<string>({ required: true })
+const modelValue = defineModel<string>({ required: true })
 </script>
 
 <style scoped>

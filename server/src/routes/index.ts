@@ -1,6 +1,6 @@
 import express from "express";
-import { getNotesById, getNotesList, setNewNote } from "../controllers/noteController.ts";
-import { sendErrorResponse, sendSuccessResponse } from "../controllers/base.ts";
+import {deleteNote, getNotesById, getNotesList, setEditedNote, setNewNote} from "../controllers/noteController.ts";
+import { sendErrorResponse, sendSuccessResponse } from "../helpers/base.ts";
 
 const notesRouter = express.Router();
 
@@ -9,9 +9,7 @@ const notesRouter = express.Router();
  */
 notesRouter.get("/all", async function(_request, response){
     try {
-        console.log("start getNotesList")
         const result = await getNotesList();
-        console.log("getNotesList result", result);
         sendSuccessResponse(response, result);
     } catch (error) {
         sendErrorResponse(response, 500, error);
@@ -21,11 +19,12 @@ notesRouter.get("/all", async function(_request, response){
 /**
  * Получение конкретной заметки по её id
  */
-notesRouter.get("/:id", async function(request, response){
+notesRouter.get("/", async function(request, response){
     try {
-        const result = await getNotesById(request.params.id);
+        const result = await getNotesById(request.query.id);
         if (!result.rows[0]) {
             sendErrorResponse(response, 404, {message: "Note not found"});
+            return
         }
             sendSuccessResponse(response, result.rows[0]);
     } catch (error) {
@@ -33,15 +32,31 @@ notesRouter.get("/:id", async function(request, response){
     }
 });
 
-notesRouter.post("/create", function(request, response){
-    const result = setNewNote(request.params);
-    console.log(result);
-
-    sendSuccessResponse(response);
+notesRouter.post("/create", async function(request, response){
+    try {
+        await setNewNote(request.body);
+        sendSuccessResponse(response);
+    } catch (error) {
+        sendErrorResponse(response, 500, error);
+    }
 });
 
-notesRouter.put("/edit:id", function(request, response){
-    response.send(`Редактирование заметки с id ${request.params.id}`);
+notesRouter.put("/edit", async function(request, response){
+    try {
+        await setEditedNote(request.body);
+        sendSuccessResponse(response);
+    } catch (error) {
+        sendErrorResponse(response, 500, error);
+    }
+});
+
+notesRouter.delete("/delete", async function(request, response){
+    try {
+        await deleteNote(request.query.id);
+        sendSuccessResponse(response);
+    } catch (error) {
+        sendErrorResponse(response, 500, error);
+    }
 });
 
 export const mountRoutes = (app: any) => {

@@ -14,7 +14,9 @@
 withDefaults(defineProps<{ title: string, isOutlined?: boolean }>(),{
   title: '',
   isOutlined: false,
-})
+});
+
+defineEmits(['click']);
 </script>
 
 <style scoped>

@@ -13,8 +13,18 @@ export const getAllNotes = async () => {
     }
 }
 
-export const getNote = async (id: string) => http.get(`/notes/${id}`);
+export const getNote = async (id: string) => http.get(`/notes/`, {
+    params: {
+        id,
+    }
+});
 
-export const setNewNote = (note: Partial<INote>) => http.post(`/notes/create`, { note }, {
-    params: note
+export const setNewNote = (note: Partial<INote>) => http.post(`/notes/create`, note);
+
+export const setEditedNote = (note: INote) => http.put(`/notes/edit`, note);
+
+export const deleteNote = (id: string) => http.delete(`/notes/delete`, {
+    params: {
+        id,
+    }
 });

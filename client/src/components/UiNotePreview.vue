@@ -3,7 +3,7 @@
     <RouterLink :to="`/notes/${noteItem.id}`">
       <div class="ui-note-preview__container">
         <p class="ui-note-preview__title">
-          {{ noteItem.title }}
+          {{ noteItem.title || 'No title' }}
         </p>
       </div>
     </RouterLink>
@@ -16,8 +16,8 @@ import type { INote } from "../types/notes.ts";
 withDefaults(defineProps<{ noteItem: INote }>(), {
   noteItem: {
     id: 0,
-    title: "default title",
-    content: "default content"
+    title: "",
+    content: ""
   },
 });
 </script>
