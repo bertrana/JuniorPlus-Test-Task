@@ -1,12 +1,19 @@
 <template>
-  <button class="ui-button" @click="$emit('click')">
+  <button
+      :class="{
+          'ui-button': true,
+          'ui-button--outlined': isOutlined
+      }"
+      @click="$emit('click')"
+  >
     {{ title }}
   </button>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  title: String,
+withDefaults(defineProps<{ title: string, isOutlined?: boolean }>(),{
+  title: '',
+  isOutlined: false,
 })
 </script>
 
@@ -20,5 +27,10 @@ defineProps({
 .ui-button:hover {
   cursor: pointer;
   background-color: lightcyan;
+}
+
+.ui-button--outlined {
+  border: 1px solid lightgray;
+  border-radius: 4px;
 }
 </style>

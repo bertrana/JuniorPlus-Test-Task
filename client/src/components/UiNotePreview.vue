@@ -1,7 +1,11 @@
 <template>
   <div class="ui-note-preview">
     <RouterLink :to="`/notes/${noteItem.id}`">
-      {{ noteItem.title }}
+      <div class="ui-note-preview__container">
+        <p class="ui-note-preview__title">
+          {{ noteItem.title }}
+        </p>
+      </div>
     </RouterLink>
   </div>
 </template>
@@ -21,8 +25,7 @@ withDefaults(defineProps<{ noteItem: INote }>(), {
 <style scoped>
 .ui-note-preview {
   padding: 16px;
-  background-color: lavenderblush;
-  border: 2px solid gray;
-  border-radius: 16px;
+  border: 1px solid lightgray;
+  border-radius: 8px;
 }
 </style>

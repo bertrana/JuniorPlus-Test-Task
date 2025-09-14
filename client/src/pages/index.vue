@@ -4,6 +4,7 @@
       <UiButton
           type="button"
           title="Add note"
+          is-outlined
           @click="clickAddNote"
       />
     </div>
