@@ -26,33 +26,35 @@
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { computed, onMounted, reactive } from "vue";
+import {computed, onMounted, reactive, ref, watch} from "vue";
 import UiButton from "@components/UiButton.vue";
 import UiInput from "@components/UiInput.vue";
 import UiTextarea from "@components/UiTextarea.vue";
 import type {INote} from "../../types/notes.ts";
+import {setNewNote} from "../../services/notes.ts";
 
 const route = useRoute();
 
-const data = reactive<INote>({
+const data = ref<INote>({
   title: "",
   content: "",
   id: Number(route.params.id),
 })
 
-const isNewNote = computed<boolean>(() => data.id === 0);
+const isNewNote = computed<boolean>(() => data.value.id === 0);
 
 const clickDeleteButton = () => {
   console.log("clickDelete");
 }
 
-const clickSaveButton = () => {
-  console.log("clickSave");
+const clickSaveButton = async () => {
+  try {
+    const result = await setNewNote(data.value);
+    console.log("setNewNode result", result);
+  } catch (error) {
+    console.log("setNewNode error", error);
+  }
 }
-
-onMounted(() => {
-
-})
 </script>
 
 <style scoped>

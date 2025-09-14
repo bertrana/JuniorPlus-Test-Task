@@ -11,7 +11,7 @@ export const getNotesById = async (id: string) => {
     });
 }
 
-export const setNote = async (data) => {
+export const setNewNote = async (data) => {
     return await client.query({
         text: 'INSERT INTO notes (title, content) VALUES($1, $2)',
         values: [data.title, data.content],

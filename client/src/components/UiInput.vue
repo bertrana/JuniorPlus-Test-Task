@@ -1,13 +1,13 @@
 <template>
   <input
-      :value="modelValue"
+      v-model="modelValue"
       placeholder="Enter a title"
       class="ui-input"
   />
 </template>
 
 <script setup lang="ts">
-defineModel()
+defineModel<string>({ required: true })
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 import express from "express";
-import { getNotesById, getNotesList, setNote } from "../controllers/noteController.ts";
+import { getNotesById, getNotesList, setNewNote } from "../controllers/noteController.ts";
 import { sendErrorResponse, sendSuccessResponse } from "../controllers/base.ts";
 
 const notesRouter = express.Router();
@@ -9,7 +9,9 @@ const notesRouter = express.Router();
  */
 notesRouter.get("/all", async function(_request, response){
     try {
+        console.log("start getNotesList")
         const result = await getNotesList();
+        console.log("getNotesList result", result);
         sendSuccessResponse(response, result);
     } catch (error) {
         sendErrorResponse(response, 500, error);
@@ -32,8 +34,7 @@ notesRouter.get("/:id", async function(request, response){
 });
 
 notesRouter.post("/create", function(request, response){
-    console.log(request.body);
-    const result = setNote(request.body);
+    const result = setNewNote(request.params);
     console.log(result);
 
     sendSuccessResponse(response);

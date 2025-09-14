@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
-// import { getAllNotes } from "../services/notes.ts";
+import { getAllNotes } from "../services/notes.ts";
 import UiList from "@components/UiList.vue";
 import UiNotePreview from "@components/UiNotePreview.vue";
 import type {INote} from "../types/notes.ts";
@@ -43,22 +43,22 @@ const clickAddNote = () => {
 }
 
 onMounted(async () => {
-  // notesList.value = await getAllNotes();
-  notesList.value = [
-    {
-      id: 123,
-      title: "title 1",
-      content: "Add note",
-    }, {
-      id: 234,
-      title: "title 2",
-      content: "Add note",
-    }, {
-      id: 345,
-      title: "title 3",
-      content: "Add note",
-    },
-  ];
+  notesList.value = await getAllNotes();
+  // notesList.value = [
+  //   {
+  //     id: 123,
+  //     title: "title 1",
+  //     content: "Add note",
+  //   }, {
+  //     id: 234,
+  //     title: "title 2",
+  //     content: "Add note",
+  //   }, {
+  //     id: 345,
+  //     title: "title 3",
+  //     content: "Add note",
+  //   },
+  // ];
 })
 </script>
 
